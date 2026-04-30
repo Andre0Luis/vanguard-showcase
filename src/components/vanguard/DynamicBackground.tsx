@@ -1,4 +1,4 @@
-import { motion, MotionValue, useTransform } from "framer-motion";
+import { motion, MotionValue, useMotionValue, useTransform } from "framer-motion";
 
 type Tone = "neutral" | "neon" | "alert" | "safe";
 
@@ -17,8 +17,8 @@ interface Props {
 export function DynamicBackground({ tone = "neutral", scrollProgress }: Props) {
   const colors = palette[tone];
 
-  // Defaults if no scroll provided
-  const fallback = useTransform([0] as unknown as MotionValue<number>[], () => 0);
+  // Stable fallback motion value if no scroll signal is provided.
+  const fallback = useMotionValue(0);
   const sp = scrollProgress ?? fallback;
 
   const orb1X = useTransform(sp, [0, 1], ["-10%", "20%"]);
