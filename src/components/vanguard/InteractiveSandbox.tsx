@@ -1,16 +1,17 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Fingerprint, KeyRound, Home, Settings2 } from "lucide-react";
+import { Fingerprint, KeyRound, Home, Settings2, Sparkles } from "lucide-react";
 import { PhoneFrame } from "./PhoneFrame";
-import { LoginScreen, SetupScreen, HomeScreen, SettingsScreen } from "./MiniAppScreens";
+import { LoginScreen, SetupScreen, TutorialScreen, HomeScreen, SettingsScreen } from "./MiniAppScreens";
 
-type ScreenKey = "login" | "setup" | "home" | "settings";
+type ScreenKey = "login" | "setup" | "tutorial" | "home" | "settings";
 
 const tabs: { key: ScreenKey; label: string; icon: typeof Home }[] = [
-  { key: "login", label: "Login", icon: Fingerprint },
-  { key: "setup", label: "Setup", icon: KeyRound },
-  { key: "home", label: "Dashboard", icon: Home },
-  { key: "settings", label: "Settings", icon: Settings2 },
+  { key: "login", label: "Entrar", icon: Fingerprint },
+  { key: "setup", label: "Verificar", icon: KeyRound },
+  { key: "tutorial", label: "Tutorial", icon: Sparkles },
+  { key: "home", label: "Painel", icon: Home },
+  { key: "settings", label: "Ajustes", icon: Settings2 },
 ];
 
 export function InteractiveSandbox() {
@@ -25,25 +26,33 @@ export function InteractiveSandbox() {
         className="text-center"
       >
         <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-white/60 backdrop-blur">
-          <span className="h-1.5 w-1.5 rounded-full bg-[var(--safe)]" /> Live Prototype
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--safe)]" /> Protótipo Interativo
         </div>
         <h1 className="mt-5 bg-gradient-to-b from-white to-white/60 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
           Project <span className="text-[var(--neon)] text-glow-neon">Vanguard</span>
         </h1>
         <p className="mt-4 text-base text-white/60 sm:text-lg">
-          <span className="text-white text-glow-neon">Anticipate</span>, <span className="text-white text-glow-neon">intercept</span>, and <span className="text-white text-glow-neon">protect</span>.
+          <span className="text-white text-glow-neon">Antecipe</span>, <span className="text-white text-glow-neon">intercepte</span> e <span className="text-white text-glow-neon">proteja</span>.
         </p>
         <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">
-          A next-generation Android security suite that neutralizes phishing,
-          malware and surveillance threats in real time.
+          Um sistema de segurança Android de nova geração que neutraliza phishing,
+          malwares e tentativas de fraude em tempo real.
         </p>
       </motion.div>
 
       <div className="mt-14 grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
         {/* Left buttons */}
         <div className="flex flex-row flex-wrap justify-center gap-3 lg:flex-col lg:items-end">
-          {tabs.slice(0, 2).map((t) => (
-            <SandboxButton key={t.key} active={active === t.key} onClick={() => setActive(t.key)} icon={<t.icon className="h-4 w-4" />} label={t.label} />
+          {tabs.slice(0, 2).map((t, i) => (
+            <motion.div
+              key={t.key}
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 * i, type: "spring", stiffness: 140, damping: 18 }}
+            >
+              <SandboxButton active={active === t.key} onClick={() => setActive(t.key)} icon={<t.icon className="h-4 w-4" />} label={t.label} />
+            </motion.div>
           ))}
         </div>
 
@@ -52,6 +61,7 @@ export function InteractiveSandbox() {
           <AnimatePresence mode="wait">
             {active === "login" && <LoginScreen />}
             {active === "setup" && <SetupScreen />}
+            {active === "tutorial" && <TutorialScreen />}
             {active === "home" && <HomeScreen />}
             {active === "settings" && <SettingsScreen />}
           </AnimatePresence>
@@ -59,8 +69,16 @@ export function InteractiveSandbox() {
 
         {/* Right buttons */}
         <div className="flex flex-row flex-wrap justify-center gap-3 lg:flex-col lg:items-start">
-          {tabs.slice(2).map((t) => (
-            <SandboxButton key={t.key} active={active === t.key} onClick={() => setActive(t.key)} icon={<t.icon className="h-4 w-4" />} label={t.label} />
+          {tabs.slice(2).map((t, i) => (
+            <motion.div
+              key={t.key}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 * i, type: "spring", stiffness: 140, damping: 18 }}
+            >
+              <SandboxButton active={active === t.key} onClick={() => setActive(t.key)} icon={<t.icon className="h-4 w-4" />} label={t.label} />
+            </motion.div>
           ))}
         </div>
       </div>
@@ -70,7 +88,7 @@ export function InteractiveSandbox() {
         transition={{ duration: 2, repeat: Infinity }}
         className="mt-16 text-[10px] uppercase tracking-[0.3em] text-white/40"
       >
-        Scroll for the cinematic tour ↓
+        Role para o tour cinematográfico ↓
       </motion.div>
     </section>
   );

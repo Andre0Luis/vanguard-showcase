@@ -17,25 +17,25 @@ const states: {
 }[] = [
   {
     key: "neon",
-    step: "01 · Anticipate",
-    title: "Read the threat before it lands.",
-    text: "NotificationListener API intercepts and analyzes links before the user even clicks.",
+    step: "01 · Antecipar",
+    title: "Identifique a ameaça antes que ela chegue.",
+    text: "A NotificationListener API intercepta e analisa links antes mesmo do usuário tocar neles.",
     icon: Eye,
     side: "left",
   },
   {
     key: "alert",
-    step: "02 · Intercept",
-    title: "Sever the connection in 0.04 ms.",
-    text: "Local VpnService acts as a DNS Sinkhole, severing the connection to malicious domains instantly.",
+    step: "02 · Interceptar",
+    title: "Corte a conexão em 0,04 ms.",
+    text: "Um VpnService local atua como DNS Sinkhole, derrubando conexões a domínios maliciosos instantaneamente.",
     icon: Ban,
     side: "right",
   },
   {
     key: "safe",
-    step: "03 · Protect",
-    title: "Verify anything, anytime.",
-    text: "Share Intents allow secure, on-demand verification without compromising user privacy.",
+    step: "03 · Proteger",
+    title: "Verifique qualquer link, a qualquer hora.",
+    text: "Share Intents permitem verificação segura e sob demanda sem comprometer a privacidade do usuário.",
     icon: ScanLine,
     side: "left",
   },
@@ -64,7 +64,7 @@ export function CinematicScroll() {
 
       <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
         <div className="absolute inset-x-0 top-8 z-10 text-center">
-          <div className="text-[10px] uppercase tracking-[0.35em] text-white/50">The Vanguard Doctrine</div>
+          <div className="text-[10px] uppercase tracking-[0.35em] text-white/50">A Doutrina Vanguard</div>
           <ProgressDots active={activeIdx} />
         </div>
 
@@ -150,7 +150,7 @@ function NarrativeCard({
       <p className="mt-2 text-sm leading-relaxed text-white/70">{s.text}</p>
       <div className="mt-4 flex items-center gap-2 text-[10px] text-white/40">
         <span className="h-1 w-1 rounded-full" style={{ background: accent }} />
-        Live system module
+        Módulo do sistema em execução
       </div>
     </motion.div>
   );
