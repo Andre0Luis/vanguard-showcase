@@ -10,7 +10,10 @@ import {
   Siren,
   MessageSquareWarning,
   Package,
-  MessageCircle,
+  Link2,
+  Banknote,
+  Newspaper,
+  QrCode,
 } from "lucide-react";
 import { PhoneFrame } from "./PhoneFrame";
 import { OnboardingJourney, type JourneyScreen } from "./OnboardingScreens";
@@ -25,18 +28,21 @@ const tabs: { key: TabKey; label: string; icon: typeof Home }[] = [
   { key: "home", label: "Painel", icon: Home },
   { key: "settings", label: "Ajustes", icon: Settings2 },
   { key: "scanner", label: "Scanner", icon: ScanLine },
+  { key: "pix", label: "Pix", icon: QrCode },
+  { key: "blog", label: "Blog", icon: Newspaper },
   { key: "threats", label: "Simulações", icon: Siren },
 ];
 
 const simulations: { key: SimulationKind; label: string; icon: typeof Home }[] = [
-  { key: "sms", label: "SMS de phishing", icon: MessageSquareWarning },
+  { key: "link", label: "Link suspeito", icon: Link2 },
   { key: "app", label: "App malicioso", icon: Package },
-  { key: "whatsapp", label: "Link no WhatsApp", icon: MessageCircle },
+  { key: "sms", label: "SMS de phishing", icon: MessageSquareWarning },
+  { key: "pix", label: "Cópia de chave Pix", icon: Banknote },
 ];
 
 export function InteractiveSandbox() {
   const [active, setActive] = useState<TabKey>("welcome");
-  const [sim, setSim] = useState<SimulationKind>("sms");
+  const [sim, setSim] = useState<SimulationKind>("link");
   const [simKey, setSimKey] = useState(0); // bump to replay
 
   return (
@@ -65,9 +71,9 @@ export function InteractiveSandbox() {
       </motion.div>
 
       <div className="mt-14 grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
-        {/* Left buttons (3) */}
+        {/* Left buttons */}
         <div className="flex flex-row flex-wrap justify-center gap-3 lg:flex-col lg:items-end">
-          {tabs.slice(0, 4).map((t, i) => (
+          {tabs.slice(0, 5).map((t, i) => (
             <motion.div
               key={t.key}
               initial={{ opacity: 0, x: -20 }}
@@ -101,9 +107,9 @@ export function InteractiveSandbox() {
           )}
         </PhoneFrame>
 
-        {/* Right buttons (3) */}
+        {/* Right buttons */}
         <div className="flex flex-row flex-wrap justify-center gap-3 lg:flex-col lg:items-start">
-          {tabs.slice(4).map((t, i) => (
+          {tabs.slice(5).map((t, i) => (
             <motion.div
               key={t.key}
               initial={{ opacity: 0, x: 20 }}
@@ -128,11 +134,16 @@ export function InteractiveSandbox() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ type: "spring", stiffness: 160, damping: 20 }}
-          className="mt-10 flex flex-wrap justify-center gap-2"
+          className="mt-10 flex w-full max-w-2xl flex-col items-center gap-3"
         >
-          <span className="mr-2 self-center text-[10px] uppercase tracking-[0.2em] text-white/40">
-            Cenário:
-          </span>
+          <div className="flex items-center gap-2 rounded-full border border-[var(--alert)]/40 bg-[var(--alert)]/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-[var(--alert)]">
+            <Siren className="h-3 w-3" /> Simulação · cenário externo ao app
+          </div>
+          <p className="max-w-md text-center text-[11px] text-white/50">
+            As notificações abaixo aparecem fora do Vanguard, no sistema do celular.
+            O Vanguard intercepta antes que o usuário caia no golpe.
+          </p>
+          <div className="flex flex-wrap justify-center gap-2">
           {simulations.map((s) => {
             const isActive = sim === s.key;
             return (
@@ -155,6 +166,7 @@ export function InteractiveSandbox() {
               </motion.button>
             );
           })}
+          </div>
         </motion.div>
       )}
 
