@@ -1,20 +1,43 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ShieldCheck, UserPlus, KeyRound, Home, Settings2, ScanLine } from "lucide-react";
+import {
+  ShieldCheck,
+  UserPlus,
+  KeyRound,
+  Home,
+  Settings2,
+  ScanLine,
+  Siren,
+  MessageSquareWarning,
+  Package,
+  MessageCircle,
+} from "lucide-react";
 import { PhoneFrame } from "./PhoneFrame";
 import { OnboardingJourney, type JourneyScreen } from "./OnboardingScreens";
+import { ThreatSimulation, type SimulationKind } from "./ThreatSimulations";
 
-const tabs: { key: JourneyScreen; label: string; icon: typeof Home }[] = [
+type TabKey = JourneyScreen | "threats";
+
+const tabs: { key: TabKey; label: string; icon: typeof Home }[] = [
   { key: "welcome", label: "Início", icon: ShieldCheck },
   { key: "register", label: "Cadastro", icon: UserPlus },
   { key: "otp", label: "Verificação", icon: KeyRound },
   { key: "home", label: "Painel", icon: Home },
   { key: "settings", label: "Ajustes", icon: Settings2 },
   { key: "scanner", label: "Scanner", icon: ScanLine },
+  { key: "threats", label: "Simulações", icon: Siren },
+];
+
+const simulations: { key: SimulationKind; label: string; icon: typeof Home }[] = [
+  { key: "sms", label: "SMS de phishing", icon: MessageSquareWarning },
+  { key: "app", label: "App malicioso", icon: Package },
+  { key: "whatsapp", label: "Link no WhatsApp", icon: MessageCircle },
 ];
 
 export function InteractiveSandbox() {
-  const [active, setActive] = useState<JourneyScreen>("welcome");
+  const [active, setActive] = useState<TabKey>("welcome");
+  const [sim, setSim] = useState<SimulationKind>("sms");
+  const [simKey, setSimKey] = useState(0); // bump to replay
 
   return (
     <section className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col items-center justify-center px-6 pb-24 pt-32">
@@ -44,7 +67,7 @@ export function InteractiveSandbox() {
       <div className="mt-14 grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-[1fr_auto_1fr]">
         {/* Left buttons (3) */}
         <div className="flex flex-row flex-wrap justify-center gap-3 lg:flex-col lg:items-end">
-          {tabs.slice(0, 3).map((t, i) => (
+          {tabs.slice(0, 4).map((t, i) => (
             <motion.div
               key={t.key}
               initial={{ opacity: 0, x: -20 }}
@@ -64,12 +87,23 @@ export function InteractiveSandbox() {
 
         {/* Phone — fully self-contained journey */}
         <PhoneFrame>
-          <OnboardingJourney screen={active} onNavigate={setActive} />
+          {active === "threats" ? (
+            <ThreatSimulation
+              key={`${sim}-${simKey}`}
+              kind={sim}
+              onReplay={() => setSimKey((k) => k + 1)}
+            />
+          ) : (
+            <OnboardingJourney
+              screen={active as JourneyScreen}
+              onNavigate={(s) => setActive(s)}
+            />
+          )}
         </PhoneFrame>
 
         {/* Right buttons (3) */}
         <div className="flex flex-row flex-wrap justify-center gap-3 lg:flex-col lg:items-start">
-          {tabs.slice(3).map((t, i) => (
+          {tabs.slice(4).map((t, i) => (
             <motion.div
               key={t.key}
               initial={{ opacity: 0, x: 20 }}
@@ -87,6 +121,42 @@ export function InteractiveSandbox() {
           ))}
         </div>
       </div>
+
+      {/* Scenario selector — only visible in Simulations mode */}
+      {active === "threats" && (
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ type: "spring", stiffness: 160, damping: 20 }}
+          className="mt-10 flex flex-wrap justify-center gap-2"
+        >
+          <span className="mr-2 self-center text-[10px] uppercase tracking-[0.2em] text-white/40">
+            Cenário:
+          </span>
+          {simulations.map((s) => {
+            const isActive = sim === s.key;
+            return (
+              <motion.button
+                key={s.key}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => {
+                  setSim(s.key);
+                  setSimKey((k) => k + 1);
+                }}
+                className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-medium transition-colors ${
+                  isActive
+                    ? "border-[var(--alert)]/60 bg-[var(--alert)]/15 text-white shadow-[0_0_24px_-6px_rgba(255,59,48,0.6)]"
+                    : "border-white/10 bg-white/5 text-white/60 hover:text-white"
+                }`}
+              >
+                <s.icon className="h-3.5 w-3.5" />
+                {s.label}
+              </motion.button>
+            );
+          })}
+        </motion.div>
+      )}
 
       <motion.div
         animate={{ y: [0, 8, 0] }}
