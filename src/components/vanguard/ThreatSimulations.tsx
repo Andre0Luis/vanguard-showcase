@@ -195,46 +195,93 @@ function NotificationCard({ kind, tapped }: { kind: SimulationKind; tapped: bool
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -40, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: tapped ? 0.97 : 1 }}
-      exit={{ opacity: 0, y: -20, scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 220, damping: 24 }}
-      className="absolute left-3 right-3 top-10 z-20"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="absolute inset-0 z-20 flex items-center justify-center px-4"
     >
-      <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/[0.08] p-2.5 backdrop-blur-xl shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)]">
-        {tapped && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-white/10"
-          />
-        )}
-        <div className="relative flex items-start gap-2">
+      {/* Dim backdrop — the user's screen darkens for the priority alert */}
+      <div className="absolute inset-0 bg-black/55 backdrop-blur-[2px]" />
+
+      <motion.div
+        initial={{ scale: 0.6, opacity: 0, y: 20 }}
+        animate={{
+          scale: tapped ? 0.97 : 1,
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{ type: "spring", stiffness: 240, damping: 20 }}
+        className="relative w-full"
+      >
+        {/* Priority pulse ring */}
+        <motion.div
+          animate={{ scale: [1, 1.06, 1], opacity: [0.55, 0, 0.55] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          className="pointer-events-none absolute -inset-1.5 rounded-[1.5rem]"
+          style={{ boxShadow: `0 0 0 2px ${c.tint}` }}
+        />
+
+        <div
+          className="relative overflow-hidden rounded-2xl border bg-white/[0.10] p-3 backdrop-blur-xl shadow-[0_20px_50px_-10px_rgba(0,0,0,0.9)]"
+          style={{ borderColor: `${c.tint}80` }}
+        >
+          {/* Priority header strip */}
           <div
-            className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg"
-            style={{ background: `${c.tint}33`, color: c.tint }}
+            className="-mx-3 -mt-3 mb-2.5 flex items-center justify-between px-3 py-1"
+            style={{ background: `${c.tint}33` }}
           >
-            <Icon className="h-3.5 w-3.5" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5">
-              <span className="text-[9px] uppercase tracking-wider text-white/50">{c.app}</span>
-              <span className="text-[9px] text-white/30">· agora</span>
+            <div className="flex items-center gap-1 text-[8px] font-bold uppercase tracking-[0.2em] text-white">
+              <motion.span
+                animate={{ opacity: [1, 0.3, 1] }}
+                transition={{ duration: 0.9, repeat: Infinity }}
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ background: c.tint }}
+              />
+              Alerta prioritário
             </div>
-            <div className="mt-0.5 text-[11px] font-semibold text-white">{c.title}</div>
-            <div className="mt-0.5 text-[10px] leading-snug text-white/70">{c.body}</div>
+            <span className="text-[8px] text-white/60">agora</span>
+          </div>
+
+          {tapped && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="absolute inset-0 bg-white/10"
+            />
+          )}
+
+          <div className="relative flex items-start gap-2.5">
+            <div
+              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl"
+              style={{ background: `${c.tint}33`, color: c.tint }}
+            >
+              <Icon className="h-4 w-4" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[9px] uppercase tracking-wider text-white/50">{c.app}</div>
+              <div className="mt-0.5 text-[12px] font-bold leading-snug text-white">
+                {c.title}
+              </div>
+              <div className="mt-1 text-[10px] leading-snug text-white/75">{c.body}</div>
+            </div>
+          </div>
+
+          <div className="relative mt-2.5 flex items-center gap-1 text-[9px] text-white/50">
+            <span className="inline-block h-1 w-1 rounded-full bg-white/40" />
+            Toque para ver — esta notificação requer atenção
           </div>
         </div>
-      </div>
 
-      {tapped && (
-        <motion.div
-          initial={{ opacity: 0.7, scale: 0 }}
-          animate={{ opacity: 0, scale: 2.4 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="pointer-events-none absolute left-1/2 top-1/2 h-12 w-12 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/60"
-        />
-      )}
+        {tapped && (
+          <motion.div
+            initial={{ opacity: 0.7, scale: 0 }}
+            animate={{ opacity: 0, scale: 2 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="pointer-events-none absolute left-1/2 top-1/2 h-16 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white/70"
+          />
+        )}
+      </motion.div>
     </motion.div>
   );
 }
