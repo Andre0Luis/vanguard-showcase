@@ -334,14 +334,17 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
 function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   const [url, setUrl] = useState(true);
   const [pix, setPix] = useState(true);
+  const [apps, setApps] = useState(true);
+  const [sms, setSms] = useState(true);
 
   const items = [
     {
       key: "url",
-      title: "Avisar sobre links perigosos",
+      title: "Avisar sobre links suspeitos",
       desc: "Vou checar se um link recebido pode ser golpe antes de abrir.",
       on: url,
       set: setUrl,
+      icon: Link2,
     },
     {
       key: "pix",
@@ -349,6 +352,23 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
       desc: "Antes de pagar, confirmo se a chave Pix é segura.",
       on: pix,
       set: setPix,
+      icon: Banknote,
+    },
+    {
+      key: "apps",
+      title: "Avisar sobre apps suspeitos",
+      desc: "Aviso se um app instalado pedir permissões perigosas.",
+      on: apps,
+      set: setApps,
+      icon: Package,
+    },
+    {
+      key: "sms",
+      title: "Avisar sobre SMS suspeitos",
+      desc: "Mensagens com indícios de golpe são marcadas para você.",
+      on: sms,
+      set: setSms,
+      icon: MessageSquareWarning,
     },
   ];
 
@@ -375,10 +395,10 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
       </div>
 
       <p className="mt-3 text-[10px] uppercase tracking-wider text-zinc-500">
-        O que o Vanguard deve fazer?
+        O que a Vanguarda deve fazer?
       </p>
 
-      <div className="mt-1.5 space-y-2">
+      <div className="mt-1.5 space-y-2 overflow-y-auto pr-1">
         {items.map((it) => (
           <div
             key={it.key}
@@ -389,7 +409,7 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
                 it.on ? "bg-[#007AFF]/10 text-[#007AFF]" : "bg-zinc-100 text-zinc-400"
               }`}
             >
-              <ShieldCheck className="h-4 w-4" />
+              <it.icon className="h-4 w-4" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-[12px] font-semibold leading-tight text-zinc-900">
