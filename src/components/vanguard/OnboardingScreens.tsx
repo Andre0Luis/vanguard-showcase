@@ -298,33 +298,7 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
         </div>
       </motion.div>
 
-      {/* Gamified metrics grid */}
-      <div className="mt-2.5 grid grid-cols-3 gap-1.5">
-        {metrics.map((m, i) => {
-          const Icon = m.icon;
-          return (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.04 * i, type: "spring", stiffness: 200, damping: 18 }}
-              className="relative flex flex-col items-center gap-0.5 rounded-xl border border-[#00306d]/15 bg-white p-1.5 text-center shadow-[0_2px_8px_-4px_rgba(0,48,109,0.2)]"
-            >
-              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#00306d]/10 text-[#00306d]">
-                <Icon className="h-3 w-3" strokeWidth={2.4} />
-              </div>
-              <div className="text-[13px] font-extrabold leading-none text-[#00306d]">
-                {m.value}
-              </div>
-              <div className="text-[7.5px] font-medium leading-tight text-zinc-500">
-                {m.label}
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Big tiles 2x2 */}
+      {/* Big tiles 2x2 — moved up above metrics */}
       <div className="mt-2.5 grid grid-cols-2 gap-2">
         {tiles.map((t, i) => {
           const Icon = t.icon;
@@ -345,6 +319,35 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
                 {t.label}
               </div>
             </motion.button>
+          );
+        })}
+      </div>
+
+      {/* Gamified metrics grid — below navigation buttons */}
+      <div className="mt-2.5 text-[9px] uppercase tracking-wider text-zinc-400">
+        Suas conquistas
+      </div>
+      <div className="mt-1 grid grid-cols-3 gap-1.5">
+        {metrics.map((m, i) => {
+          const Icon = m.icon;
+          return (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.04 * i, type: "spring", stiffness: 200, damping: 18 }}
+              className="relative flex flex-col items-center gap-0.5 rounded-xl border border-[#00306d]/15 bg-white p-1.5 text-center shadow-[0_2px_8px_-4px_rgba(0,48,109,0.2)]"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#00306d]/10 text-[#00306d]">
+                <Icon className="h-3 w-3" strokeWidth={2.4} />
+              </div>
+              <div className="text-[13px] font-extrabold leading-none text-[#00306d]">
+                {m.value}
+              </div>
+              <div className="text-[7.5px] font-medium leading-tight text-zinc-500">
+                {m.label}
+              </div>
+            </motion.div>
           );
         })}
       </div>
