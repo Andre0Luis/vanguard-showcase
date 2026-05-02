@@ -217,40 +217,93 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   const tiles: { label: string; icon: typeof Link2; to: JourneyScreen; tint: string }[] = [
     { label: "Verificar Link", icon: Link2, to: "scanner", tint: BLUE },
     { label: "Verificar Pix", icon: QrCode, to: "pix", tint: BLUE },
-    { label: "Blog de Golpes", icon: Newspaper, to: "blog", tint: BLUE },
+    { label: "Central de Notícias", icon: Newspaper, to: "blog", tint: BLUE },
     { label: "Ajustes", icon: ShieldCheck, to: "settings", tint: BLUE },
   ];
 
+  const metrics: { label: string; value: number; icon: typeof Link2 }[] = [
+    { label: "Links suspeitos", value: 18, icon: Link2 },
+    { label: "Pix analisados", value: 7, icon: Banknote },
+    { label: "QR codes lidos", value: 4, icon: QrCode },
+    { label: "Downloads barrados", value: 3, icon: Download },
+    { label: "Phishings detectados", value: 12, icon: AlertTriangle },
+    { label: "SMS suspeitos", value: 9, icon: MessageSquareWarning },
+  ];
+  const total = metrics.reduce((a, m) => a + m.value, 0);
+
   return (
-    <div className={`${screenBase} bg-gradient-to-b from-[#EAF3FF] to-white`}>
+    <div className={`${screenBase} overflow-y-auto bg-gradient-to-b from-[#EAF3FF] to-white`}>
       {/* Top status */}
       <div className="flex items-center justify-between">
         <div>
           <div className="text-[10px] text-zinc-500">Status</div>
-          <div className="text-[11px] font-bold text-[var(--safe)]">Proteção Ativa</div>
+          <div className="text-[11px] font-bold text-[var(--safe)]">Vanguarda Ativa</div>
         </div>
         <div className="flex items-center gap-1 rounded-full bg-[var(--safe)]/10 px-2 py-0.5 text-[9px] font-semibold text-[var(--safe)]">
           <Activity className="h-2.5 w-2.5" /> 3 hoje
         </div>
       </div>
 
-      {/* Pulsing shield */}
-      <div className="relative my-2 flex h-32 items-center justify-center">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 m-auto h-28 w-28 rounded-full border border-[#007AFF]/30"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ShieldCheck className="h-16 w-16 text-[#007AFF]" strokeWidth={1.6} />
-        </motion.div>
+      {/* Gamified score header */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 160, damping: 18 }}
+        className="relative mt-2 overflow-hidden rounded-2xl border border-[#00306d]/20 bg-gradient-to-br from-[#00306d] to-[#0057b8] p-3 text-white shadow-[0_10px_30px_-12px_rgba(0,48,109,0.6)]"
+      >
+        <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-white/10 blur-2xl" />
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-white/70">
+              <Trophy className="h-2.5 w-2.5" /> Sua proteção
+            </div>
+            <div className="mt-1 text-2xl font-extrabold leading-none">{total}</div>
+            <div className="mt-0.5 text-[10px] text-white/80">ameaças bloqueadas este mês</div>
+          </div>
+          <div className="text-right">
+            <div className="text-[9px] uppercase tracking-wider text-white/70">Nível</div>
+            <div className="text-base font-bold">Guardião</div>
+            <div className="mt-1 h-1.5 w-16 overflow-hidden rounded-full bg-white/20">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "72%" }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                className="h-full bg-[var(--safe)]"
+              />
+            </div>
+            <div className="mt-0.5 text-[8px] text-white/60">72% p/ Sentinela</div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Gamified metrics grid */}
+      <div className="mt-2.5 grid grid-cols-3 gap-1.5">
+        {metrics.map((m, i) => {
+          const Icon = m.icon;
+          return (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.04 * i, type: "spring", stiffness: 200, damping: 18 }}
+              className="relative flex flex-col items-center gap-0.5 rounded-xl border border-[#00306d]/15 bg-white p-1.5 text-center shadow-[0_2px_8px_-4px_rgba(0,48,109,0.2)]"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#00306d]/10 text-[#00306d]">
+                <Icon className="h-3 w-3" strokeWidth={2.4} />
+              </div>
+              <div className="text-[13px] font-extrabold leading-none text-[#00306d]">
+                {m.value}
+              </div>
+              <div className="text-[7.5px] font-medium leading-tight text-zinc-500">
+                {m.label}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Big tiles 2x2 */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="mt-2.5 grid grid-cols-2 gap-2">
         {tiles.map((t, i) => {
           const Icon = t.icon;
           return (
