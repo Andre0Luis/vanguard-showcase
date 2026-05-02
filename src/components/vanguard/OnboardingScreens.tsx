@@ -72,7 +72,9 @@ function ScreenHeader() {
 /* ---------- WELCOME ---------- */
 function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   return (
-    <div className={`${screenBase} items-center justify-center gap-6`}>
+    <div className={`${screenBase}`}>
+      <ScreenHeader />
+      <div className="flex flex-1 flex-col items-center justify-center gap-6">
       <div className="flex flex-col items-center gap-2">
         <div className="relative">
           <div className="absolute inset-0 rounded-full bg-[#00306d]/25 blur-2xl" />
@@ -100,6 +102,7 @@ function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) 
           Entrar
         </button>
       </div>
+      </div>
     </div>
   );
 }
@@ -116,6 +119,7 @@ function RegisterContent({ navigate }: { navigate: (s: JourneyScreen) => void })
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <h3 className="text-sm font-semibold text-zinc-900">Criar conta</h3>
       <p className="mt-0.5 text-[11px] text-zinc-500">Preencha seus dados para começar</p>
 
@@ -171,6 +175,7 @@ function OTPContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#007AFF]/10 text-[#007AFF]">
           <Phone className="h-4 w-4" />
