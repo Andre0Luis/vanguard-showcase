@@ -399,6 +399,7 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
@@ -476,6 +477,7 @@ function ScannerContent({ navigate }: { navigate: (s: JourneyScreen) => void }) 
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
@@ -558,6 +560,7 @@ function PixContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
@@ -697,6 +700,7 @@ const POSTS = [
 function BlogContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
