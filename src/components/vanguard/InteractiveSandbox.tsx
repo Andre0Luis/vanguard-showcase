@@ -29,7 +29,7 @@ const tabs: { key: TabKey; label: string; icon: typeof Home }[] = [
   { key: "settings", label: "Ajustes", icon: Settings2 },
   { key: "scanner", label: "Scanner", icon: ScanLine },
   { key: "pix", label: "Pix", icon: QrCode },
-  { key: "blog", label: "Blog", icon: Newspaper },
+  { key: "blog", label: "Notícias", icon: Newspaper },
   { key: "threats", label: "Simulações", icon: Siren },
 ];
 
@@ -57,7 +57,7 @@ export function InteractiveSandbox() {
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--safe)]" /> Protótipo Interativo
         </div>
         <h1 className="mt-5 bg-gradient-to-b from-white to-white/60 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
-          Project <span className="text-[var(--neon)] text-glow-neon">Vanguard</span>
+          Project <span className="text-[var(--neon)] text-glow-neon">Vanguarda</span>
         </h1>
         <p className="mt-4 text-base text-white/60 sm:text-lg">
           <span className="text-white text-glow-neon">Antecipe</span>,{" "}
