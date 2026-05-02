@@ -48,14 +48,33 @@ const SCREEN_ORDER: Record<JourneyScreen, number> = {
 };
 
 /* Light theme tokens used across all screens */
-const screenBase = "absolute inset-0 px-4 pb-4 pt-4 flex flex-col bg-white text-zinc-900";
+const screenBase = "absolute inset-0 px-4 pb-4 pt-3 flex flex-col bg-white text-zinc-900";
 const BLUE = "#007AFF";
 const LOGO = "#00306d";
+
+/* ---------- SHARED IN-APP HEADER ---------- */
+function ScreenHeader() {
+  return (
+    <div className="-mx-4 mb-3 flex items-center justify-between border-b border-zinc-100 px-4 pb-2">
+      <div className="flex items-center gap-1.5">
+        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#00306d]/10">
+          <ShieldCheck className="h-3.5 w-3.5 text-[#00306d]" strokeWidth={2.4} />
+        </div>
+        <span className="text-[11px] font-bold tracking-wide text-[#00306d]">Vanguarda</span>
+      </div>
+      <span className="flex items-center gap-1 text-[8.5px] font-semibold uppercase tracking-wider text-[var(--safe)]">
+        <span className="h-1.5 w-1.5 rounded-full bg-[var(--safe)]" /> Ativo
+      </span>
+    </div>
+  );
+}
 
 /* ---------- WELCOME ---------- */
 function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   return (
-    <div className={`${screenBase} items-center justify-center gap-6`}>
+    <div className={`${screenBase}`}>
+      <ScreenHeader />
+      <div className="flex flex-1 flex-col items-center justify-center gap-6">
       <div className="flex flex-col items-center gap-2">
         <div className="relative">
           <div className="absolute inset-0 rounded-full bg-[#00306d]/25 blur-2xl" />
@@ -83,6 +102,7 @@ function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) 
           Entrar
         </button>
       </div>
+      </div>
     </div>
   );
 }
@@ -99,6 +119,7 @@ function RegisterContent({ navigate }: { navigate: (s: JourneyScreen) => void })
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <h3 className="text-sm font-semibold text-zinc-900">Criar conta</h3>
       <p className="mt-0.5 text-[11px] text-zinc-500">Preencha seus dados para começar</p>
 
@@ -154,6 +175,7 @@ function OTPContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-[#007AFF]/10 text-[#007AFF]">
           <Phone className="h-4 w-4" />
@@ -276,33 +298,7 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
         </div>
       </motion.div>
 
-      {/* Gamified metrics grid */}
-      <div className="mt-2.5 grid grid-cols-3 gap-1.5">
-        {metrics.map((m, i) => {
-          const Icon = m.icon;
-          return (
-            <motion.div
-              key={m.label}
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.04 * i, type: "spring", stiffness: 200, damping: 18 }}
-              className="relative flex flex-col items-center gap-0.5 rounded-xl border border-[#00306d]/15 bg-white p-1.5 text-center shadow-[0_2px_8px_-4px_rgba(0,48,109,0.2)]"
-            >
-              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#00306d]/10 text-[#00306d]">
-                <Icon className="h-3 w-3" strokeWidth={2.4} />
-              </div>
-              <div className="text-[13px] font-extrabold leading-none text-[#00306d]">
-                {m.value}
-              </div>
-              <div className="text-[7.5px] font-medium leading-tight text-zinc-500">
-                {m.label}
-              </div>
-            </motion.div>
-          );
-        })}
-      </div>
-
-      {/* Big tiles 2x2 */}
+      {/* Big tiles 2x2 — moved up above metrics */}
       <div className="mt-2.5 grid grid-cols-2 gap-2">
         {tiles.map((t, i) => {
           const Icon = t.icon;
@@ -323,6 +319,35 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
                 {t.label}
               </div>
             </motion.button>
+          );
+        })}
+      </div>
+
+      {/* Gamified metrics grid — below navigation buttons */}
+      <div className="mt-2.5 text-[9px] uppercase tracking-wider text-zinc-400">
+        Suas conquistas
+      </div>
+      <div className="mt-1 grid grid-cols-3 gap-1.5">
+        {metrics.map((m, i) => {
+          const Icon = m.icon;
+          return (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.04 * i, type: "spring", stiffness: 200, damping: 18 }}
+              className="relative flex flex-col items-center gap-0.5 rounded-xl border border-[#00306d]/15 bg-white p-1.5 text-center shadow-[0_2px_8px_-4px_rgba(0,48,109,0.2)]"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#00306d]/10 text-[#00306d]">
+                <Icon className="h-3 w-3" strokeWidth={2.4} />
+              </div>
+              <div className="text-[13px] font-extrabold leading-none text-[#00306d]">
+                {m.value}
+              </div>
+              <div className="text-[7.5px] font-medium leading-tight text-zinc-500">
+                {m.label}
+              </div>
+            </motion.div>
           );
         })}
       </div>
@@ -374,6 +399,7 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
@@ -451,6 +477,7 @@ function ScannerContent({ navigate }: { navigate: (s: JourneyScreen) => void }) 
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
@@ -533,6 +560,7 @@ function PixContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
 
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
@@ -672,6 +700,7 @@ const POSTS = [
 function BlogContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   return (
     <div className={screenBase}>
+      <ScreenHeader />
       <div className="flex items-center gap-2">
         <button
           onClick={() => navigate("home")}
