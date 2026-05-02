@@ -20,6 +20,10 @@ import {
   ChevronRight,
   Clock,
   ScanLine,
+  Download,
+  MessageSquareWarning,
+  Package,
+  Trophy,
 } from "lucide-react";
 
 export type JourneyScreen =
@@ -44,8 +48,9 @@ const SCREEN_ORDER: Record<JourneyScreen, number> = {
 };
 
 /* Light theme tokens used across all screens */
-const screenBase = "absolute inset-0 px-4 pb-4 pt-3 flex flex-col bg-white text-zinc-900";
+const screenBase = "absolute inset-0 px-4 pb-4 pt-4 flex flex-col bg-white text-zinc-900";
 const BLUE = "#007AFF";
+const LOGO = "#00306d";
 
 /* ---------- WELCOME ---------- */
 function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
@@ -53,13 +58,13 @@ function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) 
     <div className={`${screenBase} items-center justify-center gap-6`}>
       <div className="flex flex-col items-center gap-2">
         <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-[#007AFF]/25 blur-2xl" />
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[#007AFF]/20 bg-[#007AFF]/10">
-            <ShieldCheck className="h-10 w-10 text-[#007AFF]" />
+          <div className="absolute inset-0 rounded-full bg-[#00306d]/25 blur-2xl" />
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[#00306d]/20 bg-[#00306d]/10">
+            <ShieldCheck className="h-10 w-10 text-[#00306d]" />
           </div>
         </div>
         <div className="text-center">
-          <h3 className="text-base font-bold tracking-wide text-zinc-900">Vanguard</h3>
+          <h3 className="text-base font-bold tracking-wide text-[#00306d]">Vanguarda</h3>
           <p className="mt-0.5 text-[10px] text-zinc-500">Proteção em tempo real</p>
         </div>
       </div>
