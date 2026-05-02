@@ -48,9 +48,26 @@ const SCREEN_ORDER: Record<JourneyScreen, number> = {
 };
 
 /* Light theme tokens used across all screens */
-const screenBase = "absolute inset-0 px-4 pb-4 pt-4 flex flex-col bg-white text-zinc-900";
+const screenBase = "absolute inset-0 px-4 pb-4 pt-3 flex flex-col bg-white text-zinc-900";
 const BLUE = "#007AFF";
 const LOGO = "#00306d";
+
+/* ---------- SHARED IN-APP HEADER ---------- */
+function ScreenHeader() {
+  return (
+    <div className="-mx-4 mb-3 flex items-center justify-between border-b border-zinc-100 px-4 pb-2">
+      <div className="flex items-center gap-1.5">
+        <div className="flex h-6 w-6 items-center justify-center rounded-md bg-[#00306d]/10">
+          <ShieldCheck className="h-3.5 w-3.5 text-[#00306d]" strokeWidth={2.4} />
+        </div>
+        <span className="text-[11px] font-bold tracking-wide text-[#00306d]">Vanguarda</span>
+      </div>
+      <span className="flex items-center gap-1 text-[8.5px] font-semibold uppercase tracking-wider text-[var(--safe)]">
+        <span className="h-1.5 w-1.5 rounded-full bg-[var(--safe)]" /> Ativo
+      </span>
+    </div>
+  );
+}
 
 /* ---------- WELCOME ---------- */
 function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
