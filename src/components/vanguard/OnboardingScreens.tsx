@@ -679,7 +679,7 @@ function BlogContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
         >
           <ArrowLeft className="h-3.5 w-3.5" />
         </button>
-        <h3 className="text-sm font-semibold text-zinc-900">Blog de Golpes</h3>
+        <h3 className="text-sm font-semibold text-zinc-900">Central de Notícias</h3>
       </div>
 
       <p className="mt-2 text-[11px] text-zinc-600">
