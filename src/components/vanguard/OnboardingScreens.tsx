@@ -20,6 +20,10 @@ import {
   ChevronRight,
   Clock,
   ScanLine,
+  Download,
+  MessageSquareWarning,
+  Package,
+  Trophy,
 } from "lucide-react";
 
 export type JourneyScreen =
@@ -44,8 +48,9 @@ const SCREEN_ORDER: Record<JourneyScreen, number> = {
 };
 
 /* Light theme tokens used across all screens */
-const screenBase = "absolute inset-0 px-4 pb-4 pt-3 flex flex-col bg-white text-zinc-900";
+const screenBase = "absolute inset-0 px-4 pb-4 pt-4 flex flex-col bg-white text-zinc-900";
 const BLUE = "#007AFF";
+const LOGO = "#00306d";
 
 /* ---------- WELCOME ---------- */
 function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
@@ -53,13 +58,13 @@ function WelcomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) 
     <div className={`${screenBase} items-center justify-center gap-6`}>
       <div className="flex flex-col items-center gap-2">
         <div className="relative">
-          <div className="absolute inset-0 rounded-full bg-[#007AFF]/25 blur-2xl" />
-          <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[#007AFF]/20 bg-[#007AFF]/10">
-            <ShieldCheck className="h-10 w-10 text-[#007AFF]" />
+          <div className="absolute inset-0 rounded-full bg-[#00306d]/25 blur-2xl" />
+          <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-[#00306d]/20 bg-[#00306d]/10">
+            <ShieldCheck className="h-10 w-10 text-[#00306d]" />
           </div>
         </div>
         <div className="text-center">
-          <h3 className="text-base font-bold tracking-wide text-zinc-900">Vanguard</h3>
+          <h3 className="text-base font-bold tracking-wide text-[#00306d]">Vanguarda</h3>
           <p className="mt-0.5 text-[10px] text-zinc-500">Proteção em tempo real</p>
         </div>
       </div>
@@ -212,40 +217,93 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   const tiles: { label: string; icon: typeof Link2; to: JourneyScreen; tint: string }[] = [
     { label: "Verificar Link", icon: Link2, to: "scanner", tint: BLUE },
     { label: "Verificar Pix", icon: QrCode, to: "pix", tint: BLUE },
-    { label: "Blog de Golpes", icon: Newspaper, to: "blog", tint: BLUE },
+    { label: "Central de Notícias", icon: Newspaper, to: "blog", tint: BLUE },
     { label: "Ajustes", icon: ShieldCheck, to: "settings", tint: BLUE },
   ];
 
+  const metrics: { label: string; value: number; icon: typeof Link2 }[] = [
+    { label: "Links suspeitos", value: 18, icon: Link2 },
+    { label: "Pix analisados", value: 7, icon: Banknote },
+    { label: "QR codes lidos", value: 4, icon: QrCode },
+    { label: "Downloads barrados", value: 3, icon: Download },
+    { label: "Phishings detectados", value: 12, icon: AlertTriangle },
+    { label: "SMS suspeitos", value: 9, icon: MessageSquareWarning },
+  ];
+  const total = metrics.reduce((a, m) => a + m.value, 0);
+
   return (
-    <div className={`${screenBase} bg-gradient-to-b from-[#EAF3FF] to-white`}>
+    <div className={`${screenBase} overflow-y-auto bg-gradient-to-b from-[#EAF3FF] to-white`}>
       {/* Top status */}
       <div className="flex items-center justify-between">
         <div>
           <div className="text-[10px] text-zinc-500">Status</div>
-          <div className="text-[11px] font-bold text-[var(--safe)]">Proteção Ativa</div>
+          <div className="text-[11px] font-bold text-[var(--safe)]">Vanguarda Ativa</div>
         </div>
         <div className="flex items-center gap-1 rounded-full bg-[var(--safe)]/10 px-2 py-0.5 text-[9px] font-semibold text-[var(--safe)]">
           <Activity className="h-2.5 w-2.5" /> 3 hoje
         </div>
       </div>
 
-      {/* Pulsing shield */}
-      <div className="relative my-2 flex h-32 items-center justify-center">
-        <motion.div
-          animate={{ scale: [1, 1.1, 1], opacity: [0.4, 0.7, 0.4] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-0 m-auto h-28 w-28 rounded-full border border-[#007AFF]/30"
-        />
-        <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ShieldCheck className="h-16 w-16 text-[#007AFF]" strokeWidth={1.6} />
-        </motion.div>
+      {/* Gamified score header */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: "spring", stiffness: 160, damping: 18 }}
+        className="relative mt-2 overflow-hidden rounded-2xl border border-[#00306d]/20 bg-gradient-to-br from-[#00306d] to-[#0057b8] p-3 text-white shadow-[0_10px_30px_-12px_rgba(0,48,109,0.6)]"
+      >
+        <div className="absolute -right-4 -top-4 h-20 w-20 rounded-full bg-white/10 blur-2xl" />
+        <div className="flex items-center justify-between">
+          <div>
+            <div className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-white/70">
+              <Trophy className="h-2.5 w-2.5" /> Sua proteção
+            </div>
+            <div className="mt-1 text-2xl font-extrabold leading-none">{total}</div>
+            <div className="mt-0.5 text-[10px] text-white/80">ameaças bloqueadas este mês</div>
+          </div>
+          <div className="text-right">
+            <div className="text-[9px] uppercase tracking-wider text-white/70">Nível</div>
+            <div className="text-base font-bold">Guardião</div>
+            <div className="mt-1 h-1.5 w-16 overflow-hidden rounded-full bg-white/20">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{ width: "72%" }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+                className="h-full bg-[var(--safe)]"
+              />
+            </div>
+            <div className="mt-0.5 text-[8px] text-white/60">72% p/ Sentinela</div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Gamified metrics grid */}
+      <div className="mt-2.5 grid grid-cols-3 gap-1.5">
+        {metrics.map((m, i) => {
+          const Icon = m.icon;
+          return (
+            <motion.div
+              key={m.label}
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.04 * i, type: "spring", stiffness: 200, damping: 18 }}
+              className="relative flex flex-col items-center gap-0.5 rounded-xl border border-[#00306d]/15 bg-white p-1.5 text-center shadow-[0_2px_8px_-4px_rgba(0,48,109,0.2)]"
+            >
+              <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#00306d]/10 text-[#00306d]">
+                <Icon className="h-3 w-3" strokeWidth={2.4} />
+              </div>
+              <div className="text-[13px] font-extrabold leading-none text-[#00306d]">
+                {m.value}
+              </div>
+              <div className="text-[7.5px] font-medium leading-tight text-zinc-500">
+                {m.label}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
 
       {/* Big tiles 2x2 */}
-      <div className="grid grid-cols-2 gap-2">
+      <div className="mt-2.5 grid grid-cols-2 gap-2">
         {tiles.map((t, i) => {
           const Icon = t.icon;
           return (
@@ -276,14 +334,17 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
 function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
   const [url, setUrl] = useState(true);
   const [pix, setPix] = useState(true);
+  const [apps, setApps] = useState(true);
+  const [sms, setSms] = useState(true);
 
   const items = [
     {
       key: "url",
-      title: "Avisar sobre links perigosos",
+      title: "Avisar sobre links suspeitos",
       desc: "Vou checar se um link recebido pode ser golpe antes de abrir.",
       on: url,
       set: setUrl,
+      icon: Link2,
     },
     {
       key: "pix",
@@ -291,6 +352,23 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
       desc: "Antes de pagar, confirmo se a chave Pix é segura.",
       on: pix,
       set: setPix,
+      icon: Banknote,
+    },
+    {
+      key: "apps",
+      title: "Avisar sobre apps suspeitos",
+      desc: "Aviso se um app instalado pedir permissões perigosas.",
+      on: apps,
+      set: setApps,
+      icon: Package,
+    },
+    {
+      key: "sms",
+      title: "Avisar sobre SMS suspeitos",
+      desc: "Mensagens com indícios de golpe são marcadas para você.",
+      on: sms,
+      set: setSms,
+      icon: MessageSquareWarning,
     },
   ];
 
@@ -317,10 +395,10 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
       </div>
 
       <p className="mt-3 text-[10px] uppercase tracking-wider text-zinc-500">
-        O que o Vanguard deve fazer?
+        O que a Vanguarda deve fazer?
       </p>
 
-      <div className="mt-1.5 space-y-2">
+      <div className="mt-1.5 space-y-2 overflow-y-auto pr-1">
         {items.map((it) => (
           <div
             key={it.key}
@@ -331,7 +409,7 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
                 it.on ? "bg-[#007AFF]/10 text-[#007AFF]" : "bg-zinc-100 text-zinc-400"
               }`}
             >
-              <ShieldCheck className="h-4 w-4" />
+              <it.icon className="h-4 w-4" />
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-[12px] font-semibold leading-tight text-zinc-900">
@@ -601,7 +679,7 @@ function BlogContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
         >
           <ArrowLeft className="h-3.5 w-3.5" />
         </button>
-        <h3 className="text-sm font-semibold text-zinc-900">Blog de Golpes</h3>
+        <h3 className="text-sm font-semibold text-zinc-900">Central de Notícias</h3>
       </div>
 
       <p className="mt-2 text-[11px] text-zinc-600">
