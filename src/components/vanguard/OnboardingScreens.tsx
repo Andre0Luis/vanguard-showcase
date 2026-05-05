@@ -24,6 +24,8 @@ import {
   MessageSquareWarning,
   Package,
   Trophy,
+  Contrast,
+  Type,
 } from "lucide-react";
 
 export type JourneyScreen =
@@ -240,7 +242,7 @@ function HomeContent({ navigate }: { navigate: (s: JourneyScreen) => void }) {
     { label: "Verificar Link", icon: Link2, to: "scanner", tint: BLUE },
     { label: "Verificar Pix", icon: QrCode, to: "pix", tint: BLUE },
     { label: "Central de Notícias", icon: Newspaper, to: "blog", tint: BLUE },
-    { label: "Ajustes", icon: ShieldCheck, to: "settings", tint: BLUE },
+    { label: "Configurações", icon: ShieldCheck, to: "settings", tint: BLUE },
   ];
 
   const metrics: { label: string; value: number; icon: typeof Link2 }[] = [
@@ -361,6 +363,8 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
   const [pix, setPix] = useState(true);
   const [apps, setApps] = useState(true);
   const [sms, setSms] = useState(true);
+  const [contrast, setContrast] = useState(false);
+  const [largeText, setLargeText] = useState(false);
 
   const items = [
     {
@@ -397,6 +401,25 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
     },
   ];
 
+  const accessibility = [
+    {
+      key: "contrast",
+      title: "Alto contraste",
+      desc: "Aumenta o contraste das cores para facilitar a leitura.",
+      on: contrast,
+      set: setContrast,
+      icon: Contrast,
+    },
+    {
+      key: "largeText",
+      title: "Texto maior",
+      desc: "Aumenta o tamanho da letra em todo o aplicativo.",
+      on: largeText,
+      set: setLargeText,
+      icon: Type,
+    },
+  ];
+
   return (
     <div className={screenBase}>
       <ScreenHeader />
@@ -407,7 +430,7 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
         >
           <ArrowLeft className="h-3.5 w-3.5" />
         </button>
-        <h3 className="text-sm font-semibold text-zinc-900">Ajustes</h3>
+        <h3 className="text-sm font-semibold text-zinc-900">Configurações</h3>
       </div>
 
       <div className="mt-3 flex items-center gap-2.5 rounded-xl border border-[#007AFF]/15 bg-[#007AFF]/5 px-3 py-2.5">
@@ -426,6 +449,42 @@ function SettingsContent({ navigate }: { navigate: (s: JourneyScreen) => void })
 
       <div className="mt-1.5 space-y-2 overflow-y-auto pr-1">
         {items.map((it) => (
+          <div
+            key={it.key}
+            className="flex items-start gap-2.5 rounded-xl border border-zinc-200 bg-white px-2.5 py-2.5"
+          >
+            <div
+              className={`mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg ${
+                it.on ? "bg-[#007AFF]/10 text-[#007AFF]" : "bg-zinc-100 text-zinc-400"
+              }`}
+            >
+              <it.icon className="h-4 w-4" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div className="text-[12px] font-semibold leading-tight text-zinc-900">
+                {it.title}
+              </div>
+              <div className="mt-0.5 text-[10px] leading-snug text-zinc-500">{it.desc}</div>
+            </div>
+            <button
+              onClick={() => it.set(!it.on)}
+              className={`relative mt-1 h-6 w-11 flex-shrink-0 rounded-full p-0.5 transition-colors ${
+                it.on ? "bg-[var(--safe)]" : "bg-zinc-300"
+              }`}
+            >
+              <motion.div
+                animate={{ x: it.on ? 20 : 0 }}
+                transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                className="h-5 w-5 rounded-full bg-white shadow"
+              />
+            </button>
+          </div>
+        ))}
+
+        <p className="pt-2 text-[10px] uppercase tracking-wider text-zinc-500">
+          Acessibilidade
+        </p>
+        {accessibility.map((it) => (
           <div
             key={it.key}
             className="flex items-start gap-2.5 rounded-xl border border-zinc-200 bg-white px-2.5 py-2.5"

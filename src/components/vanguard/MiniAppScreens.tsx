@@ -27,7 +27,7 @@ export function LoginScreen() {
           </div>
         </div>
         <div className="text-center">
-          <h3 className="text-base font-semibold text-white">Bem-vindo ao Vanguard</h3>
+          <h3 className="text-base font-semibold text-white">Bem-vindo ao Vanguarda</h3>
           <p className="mt-1 text-[11px] text-white/60">Proteção em poucos toques</p>
         </div>
 
@@ -127,7 +127,7 @@ export function SetupScreen() {
         ))}
       </div>
       <button className="mt-auto w-full rounded-xl bg-[var(--neon)] py-2.5 text-xs font-semibold text-white shadow-[0_8px_24px_-6px_rgba(0,122,255,0.7)]">
-        <span className="inline-flex items-center justify-center gap-1.5"><KeyRound className="h-3.5 w-3.5" /> Ativar Vanguard</span>
+        <span className="inline-flex items-center justify-center gap-1.5"><KeyRound className="h-3.5 w-3.5" /> Ativar Vanguarda</span>
       </button>
     </motion.div>
   );
@@ -139,7 +139,7 @@ const tutorialSlides = [
     icon: Eye,
     color: "var(--neon)",
     title: "Vigilância silenciosa",
-    text: "O Vanguard analisa cada mensagem e link em segundo plano, sem interromper o seu uso.",
+    text: "O Vanguarda analisa cada mensagem e link em segundo plano, sem interromper o seu uso.",
   },
   {
     icon: Ban,
@@ -151,7 +151,7 @@ const tutorialSlides = [
     icon: ScanLine,
     color: "var(--safe)",
     title: "Verificação sob demanda",
-    text: "Compartilhe qualquer link com o Vanguard e receba um diagnóstico de segurança imediato.",
+    text: "Compartilhe qualquer link com o Vanguarda e receba um diagnóstico de segurança imediato.",
   },
   {
     icon: Sparkles,
@@ -273,7 +273,7 @@ export function HomeScreen() {
 /* ---------- SETTINGS ---------- */
 export function SettingsScreen() {
   const items = [
-    { icon: ShieldCheck, label: "Ativar Vanguard", desc: "Proteção geral do dispositivo", on: true, big: true },
+    { icon: ShieldCheck, label: "Ativar Vanguarda", desc: "Proteção geral do dispositivo", on: true, big: true },
     { icon: Wifi, label: "Proteção de Rede (DNS)", desc: "Bloqueio em nível de DNS", on: true },
     { icon: MessageSquareWarning, label: "Monitoramento de SMS", desc: "Detecção de phishing", on: true },
     { icon: Accessibility, label: "Acessibilidade", desc: "Análise de tela", on: false },
@@ -288,7 +288,7 @@ export function SettingsScreen() {
       className={`${screen} bg-gradient-to-b from-[#06111c] to-black`}
     >
       <h3 className="text-sm font-semibold text-white">Módulos de proteção</h3>
-      <p className="mt-0.5 text-[11px] text-white/50">Ajuste o Vanguard ao seu perfil</p>
+      <p className="mt-0.5 text-[11px] text-white/50">Ajuste o Vanguarda ao seu perfil</p>
       <div className="mt-3 space-y-2">
         {items.map(({ icon: Icon, label, desc, on, big }) => (
           <motion.div
