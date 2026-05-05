@@ -24,7 +24,7 @@ interface Props {
   onReplay: () => void;
 }
 
-/* Phases: 0 idle → 1 notification arrives → 2 user taps → 3 Vanguard intercepts → 4 confirmed */
+/* Phases: 0 idle → 1 notification arrives → 2 user taps → 3 Vanguarda intercepts → 4 confirmed */
 export function ThreatSimulation({ kind, onReplay }: Props) {
   const [phase, setPhase] = useState(0);
   const [trustedAdded, setTrustedAdded] = useState(false);
@@ -53,7 +53,7 @@ export function ThreatSimulation({ kind, onReplay }: Props) {
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-gradient-to-b from-[#06111c] to-black">
-      {/* "External" tag — make it obvious this is OUTSIDE the Vanguard app */}
+      {/* "External" tag — make it obvious this is OUTSIDE the Vanguarda app */}
       <div className="absolute left-1/2 top-1 z-40 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-black/50 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.2em] text-white/70 backdrop-blur">
         <span className="h-1 w-1 rounded-full bg-[var(--alert)]" />
         Fora do app · sistema Android
@@ -286,7 +286,7 @@ function NotificationCard({ kind, tapped }: { kind: SimulationKind; tapped: bool
   );
 }
 
-/* ---------- Vanguard intercept overlay ---------- */
+/* ---------- Vanguarda intercept overlay ---------- */
 type InterceptText = {
   title: string;
   sub: string;
@@ -374,7 +374,7 @@ function InterceptOverlay({
         </div>
 
         <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-[var(--alert)]/50 bg-[var(--alert)]/15 px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.18em] text-[var(--alert)]">
-          <AlertTriangle className="h-2.5 w-2.5" /> Vanguard interceptou
+          <AlertTriangle className="h-2.5 w-2.5" /> Vanguarda interceptou
         </div>
 
         <h4 className="mt-1.5 text-sm font-bold text-white">{t.title}</h4>

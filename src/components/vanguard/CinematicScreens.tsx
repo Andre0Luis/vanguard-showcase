@@ -38,7 +38,7 @@ export function AnticipateScreen() {
           transition={{ duration: 1.4, delay: 0.5 }}
           className="mt-2 h-[2px] rounded-full bg-gradient-to-r from-[var(--neon)] to-transparent"
         />
-        <div className="mt-1 text-[9px] uppercase tracking-wider text-[var(--neon)]">Vanguard scanning…</div>
+        <div className="mt-1 text-[9px] uppercase tracking-wider text-[var(--neon)]">Vanguarda scanning…</div>
       </motion.div>
     </div>
   );
@@ -70,7 +70,7 @@ export function InterceptScreen() {
         <div className="mt-4 text-[10px] uppercase tracking-[0.25em] text-[var(--alert)]">Critical Error</div>
         <h4 className="mt-1 text-base font-bold text-white text-glow-alert">Access Blocked</h4>
         <p className="mt-2 text-[10px] leading-snug text-white/70">
-          Vanguard severed connection to <span className="font-mono text-[var(--alert)]">dhl-track-now.co</span> — known phishing domain.
+          Vanguarda severed connection to <span className="font-mono text-[var(--alert)]">dhl-track-now.co</span> — known phishing domain.
         </p>
         <div className="mt-4 w-full rounded-lg border border-[var(--alert)]/30 bg-black/40 p-2 text-left font-mono text-[9px] text-white/70">
           <div><span className="text-[var(--alert)]">DENY</span> · DNS sinkhole</div>
