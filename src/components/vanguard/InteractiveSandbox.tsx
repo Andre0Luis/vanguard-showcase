@@ -26,7 +26,7 @@ const tabs: { key: TabKey; label: string; icon: typeof Home }[] = [
   { key: "register", label: "Cadastro", icon: UserPlus },
   { key: "otp", label: "Verificação", icon: KeyRound },
   { key: "home", label: "Painel", icon: Home },
-  { key: "settings", label: "Ajustes", icon: Settings2 },
+  { key: "settings", label: "Configurações", icon: Settings2 },
   { key: "scanner", label: "Verificar links", icon: ScanLine },
   { key: "pix", label: "Verificar PIX", icon: QrCode },
   { key: "blog", label: "Notícias", icon: Newspaper },
