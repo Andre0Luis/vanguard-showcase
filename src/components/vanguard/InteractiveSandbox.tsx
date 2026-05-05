@@ -57,7 +57,7 @@ export function InteractiveSandbox() {
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--safe)]" /> Protótipo Interativo
         </div>
         <h1 className="mt-5 bg-gradient-to-b from-white to-white/60 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl">
-          Project <span className="text-[var(--neon)] text-glow-neon">Vanguarda</span>
+          Projeto <span className="text-[var(--neon)] text-glow-neon">Vanguarda</span>
         </h1>
         <p className="mt-4 text-base text-white/60 sm:text-lg">
           <span className="text-white text-glow-neon">Antecipe</span>,{" "}
@@ -65,8 +65,8 @@ export function InteractiveSandbox() {
           <span className="text-white text-glow-neon">proteja</span>.
         </p>
         <p className="mx-auto mt-3 max-w-xl text-sm text-white/50">
-          Um sistema de segurança Android de nova geração que neutraliza phishing, malwares e
-          tentativas de fraude em tempo real.
+          Um aplicativo que identifica em tempo real riscos em links, pagamentos via PIX e
+          tentativas de phishing e alerta o usuário.
         </p>
       </motion.div>
 
@@ -140,8 +140,8 @@ export function InteractiveSandbox() {
             <Siren className="h-3 w-3" /> Simulação · cenário externo ao app
           </div>
           <p className="max-w-md text-center text-[11px] text-white/50">
-            As notificações abaixo aparecem fora do Vanguard, no sistema do celular.
-            O Vanguard intercepta antes que o usuário caia no golpe.
+            As notificações abaixo aparecem fora da Vanguarda, no sistema do celular.
+            A Vanguarda intercepta antes que o usuário caia no golpe.
           </p>
           <div className="flex flex-wrap justify-center gap-2">
           {simulations.map((s) => {
