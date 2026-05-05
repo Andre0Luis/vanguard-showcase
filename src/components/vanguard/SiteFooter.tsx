@@ -30,7 +30,7 @@ export function SiteFooter() {
             transition={{ delay: 0.2 }}
           >
             <div className="text-lg font-semibold text-white">
-              Project <span className="text-[var(--neon)] text-glow-neon">Vanguard</span>
+              Projeto <span className="text-[var(--neon)] text-glow-neon">Vanguarda</span>
             </div>
             <div className="mt-1 text-xs uppercase tracking-[0.3em] text-white/40">
               Antecipe · Intercepte · Proteja
@@ -48,8 +48,8 @@ export function SiteFooter() {
               <GraduationCap className="h-5 w-5" />
             </div>
             <p className="text-sm leading-relaxed text-white/80">
-              Protótipo navegável criado pelo <span className="font-semibold text-white">Grupo 17</span> da
-              {" "}<span className="font-semibold text-white">Pós-Tech da FIAP</span> — Curso de{" "}
+              Protótipo navegável criado pelo <span className="font-semibold text-white">Grupo 39</span> da
+              {" "}<span className="font-semibold text-white">Pós Tech da FIAP</span> — Curso de{" "}
               <span className="font-semibold text-white">Tech Management</span>.
             </p>
           </motion.div>
